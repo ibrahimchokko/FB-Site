@@ -1,8 +1,7 @@
-"use client";
+import type { Metadata } from "next";
+import BookingForm from "@/components/booking-form";
 
-import { useState } from "react";
-import { Input, Textarea, Select } from "@/components/ui/input";
-import Button from "@/components/ui/button";
+export const metadata: Metadata = { title: "Catering — City Chops" };
 
 const PACKAGES = [
   {
@@ -26,23 +25,16 @@ const PACKAGES = [
   },
 ];
 
+const SERVICE_OPTIONS = [
+  ...PACKAGES.map((p) => ({ label: `${p.name} — ${p.guests}`, value: p.name })),
+  { label: "Custom Bulk Cakes",  value: "Custom Bulk Cakes" },
+  { label: "Custom / Not sure yet", value: "Custom" },
+];
+
 export default function CateringPage() {
-  const [submitted, setSubmitted] = useState(false);
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const data = new FormData(form);
-    const res = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      body: data,
-    });
-    if (res.ok) setSubmitted(true);
-  }
-
   return (
     <>
-      {/* Hero */}
+      {/* ── Hero ─────────────────────────────────────────────────── */}
       <section className="bg-[var(--color-chops-bg)] text-[var(--color-chops-light)] py-16 px-4 text-center">
         <h1 className="text-4xl font-bold">
           Catering That <span className="text-[var(--color-chops-gold)]">Impresses.</span>
@@ -52,7 +44,7 @@ export default function CateringPage() {
         </p>
       </section>
 
-      {/* Package cards */}
+      {/* ── Packages ─────────────────────────────────────────────── */}
       <section className="content-container py-14">
         <h2 className="text-2xl font-bold text-(--foreground) mb-6">Our Packages</h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -82,62 +74,26 @@ export default function CateringPage() {
                   </li>
                 ))}
               </ul>
-              <button
-                onClick={() => document.getElementById("booking-form")?.scrollIntoView({ behavior: "smooth" })}
-                className="mt-auto w-full py-2.5 text-sm font-medium rounded-[var(--radius-btn)] border border-[var(--color-chops-primary)] text-[var(--color-chops-primary)] hover:bg-[var(--color-chops-primary)] hover:text-white transition-colors min-h-[44px]"
+              <a
+                href="#booking-form"
+                className="mt-auto w-full py-2.5 text-sm font-medium rounded-[var(--radius-btn)] border border-[var(--color-chops-primary)] text-[var(--color-chops-primary)] hover:bg-[var(--color-chops-primary)] hover:text-white transition-colors min-h-[44px] flex items-center justify-center"
               >
                 Book This Package
-              </button>
+              </a>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Booking form */}
-      <section id="booking-form" className="content-container pb-16 max-w-2xl">
+      {/* ── Booking form ─────────────────────────────────────────── */}
+      <section id="booking-form" className="content-container pb-16 max-w-2xl scroll-mt-20">
         <h2 className="text-2xl font-bold text-(--foreground) mb-6">Book a Package</h2>
-
-        {submitted ? (
-          <div className="rounded-[var(--radius-card)] bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 p-8 text-center space-y-2">
-            <p className="text-2xl">🎉</p>
-            <p className="font-semibold text-green-700 dark:text-green-300">Booking received!</p>
-            <p className="text-sm text-green-600 dark:text-green-400">
-              We&rsquo;ll contact you within a few hours to confirm your package.
-            </p>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <input type="hidden" name="access_key" value={process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? ""} />
-            <input type="hidden" name="subject" value="New Catering Booking — City Chops" />
-            <input type="hidden" name="from_name" value="City Chops Website" />
-            <input type="checkbox" name="botcheck" className="hidden" />
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <Input label="Your name" name="name" type="text" placeholder="Amina Suleiman" required />
-              <Input label="Phone number" name="phone" type="tel" placeholder="+234 800 000 0000" required />
-            </div>
-            <Input label="Email address" name="email" type="email" placeholder="you@example.com" required />
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <Input label="Event date" name="event_date" type="date" required />
-              <Input label="Approx. guest count" name="guest_count" type="number" min="1" placeholder="50" required />
-            </div>
-            <Select label="Package interest" name="package">
-              <option value="">Select a package</option>
-              {PACKAGES.map((p) => (
-                <option key={p.name} value={p.name}>{p.name} — {p.guests}</option>
-              ))}
-              <option value="Custom">Custom / Not sure yet</option>
-            </Select>
-            <Textarea label="Additional notes" name="message" placeholder="Event type, location, dietary requirements…" />
-
-            <Button brand="city-chops" type="submit" className="w-full">
-              Send Booking Request
-            </Button>
-            <p className="text-xs text-center text-(--muted)">
-              We typically respond within 2–4 hours during operating hours (9 AM – 10 PM WAT).
-            </p>
-          </form>
-        )}
+        <BookingForm
+          brand="city-chops"
+          accessKey={process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? ""}
+          subject="New Catering Booking — City Chops"
+          serviceOptions={SERVICE_OPTIONS}
+        />
       </section>
     </>
   );

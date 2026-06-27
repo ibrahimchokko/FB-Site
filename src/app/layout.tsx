@@ -1,19 +1,48 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, Playfair_Display } from "next/font/google";
 import { getAutoTheme, getOperationalStatus } from "@/lib/hours";
 import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
 import "./globals.css";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-sans",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  variable: "--font-display",
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://fbfamilyhub.com.ng"),
   title: {
     default: "City Chops & Fresh Tigernut Mill — Kaduna",
-    template: "%s | City Chops & Fresh Tigernut Mill",
+    template: "%s | FB Family Hub Kaduna",
   },
   description:
-    "Kaduna's favourite family food hub — fresh tigernut drinks, small chops, waina, catering, and more.",
+    "Kaduna's favourite family food hub — fresh tigernut drinks, small chops, waina, catering, and more. Serving Kaduna North, South & Central.",
+  keywords: [
+    "small chops Kaduna",
+    "tigernut drink Kaduna",
+    "catering Kaduna",
+    "waina Kaduna",
+    "food delivery Kaduna",
+    "City Chops",
+    "Fresh Tigernut Mill",
+  ],
+  openGraph: {
+    type: "website",
+    locale: "en_NG",
+    siteName: "FB Family Hub",
+    title: "City Chops & Fresh Tigernut Mill — Kaduna",
+    description:
+      "Fresh tigernut drinks, small chops, waina & catering across Kaduna.",
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -23,7 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${theme} h-full antialiased`}
+      className={`${jakarta.variable} ${playfair.variable} ${theme} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-(--background) text-(--foreground)">
         {/* Hours strip */}
@@ -34,7 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               : "bg-amber-500 text-amber-950"
           }`}
         >
-          <span className="mr-1.5">{status.isOpen ? "●" : "●"}</span>
+          <span className="mr-1.5">●</span>
           {status.message}
         </div>
 
@@ -42,31 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <main className="flex-1">{children}</main>
 
-        <footer className="border-t border-(--border) py-10 mt-16">
-          <div className="content-container grid grid-cols-1 gap-8 sm:grid-cols-3 text-sm text-(--muted)">
-            <div>
-              <p className="font-semibold text-(--foreground) mb-2">FB Family Hub</p>
-              <p>Kaduna, Nigeria</p>
-              <p className="mt-1">© {new Date().getFullYear()} All rights reserved.</p>
-            </div>
-            <div>
-              <p className="font-semibold text-(--foreground) mb-2">City Chops</p>
-              <ul className="space-y-1">
-                <li><a href="/city-chops/menu" className="hover:text-(--foreground)">Menu</a></li>
-                <li><a href="/city-chops/catering" className="hover:text-(--foreground)">Catering</a></li>
-                <li><a href="/city-chops/order" className="hover:text-(--foreground)">Order</a></li>
-              </ul>
-            </div>
-            <div>
-              <p className="font-semibold text-(--foreground) mb-2">Fresh Tigernut Mill</p>
-              <ul className="space-y-1">
-                <li><a href="/tigernut-mill/products" className="hover:text-(--foreground)">Products</a></li>
-                <li><a href="/tigernut-mill/order" className="hover:text-(--foreground)">Order</a></li>
-                <li><a href="/about" className="hover:text-(--foreground)">About</a></li>
-              </ul>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </body>
     </html>
   );

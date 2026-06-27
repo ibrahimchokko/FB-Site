@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MENU_ITEMS } from "@/data/content";
 import MenuItemCard from "@/components/menu-item-card";
@@ -75,9 +76,9 @@ export default async function CategoryPage({ params }: Props) {
           </div>
         )}
         <div className="mt-10 text-center">
-          <a href="/city-chops/menu" className="text-sm text-(--muted) hover:text-(--foreground) transition-colors">
+          <Link href="/city-chops/menu" className="text-sm text-(--muted) hover:text-(--foreground) transition-colors">
             ← View full menu
-          </a>
+          </Link>
         </div>
       </div>
     </>

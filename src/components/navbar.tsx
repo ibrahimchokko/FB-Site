@@ -100,8 +100,11 @@ export default function Navbar() {
 
         {/* Hamburger — mobile */}
         <button
-          aria-label="Toggle menu"
-          className="sm:hidden p-2 text-(--foreground)"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          aria-controls="mobile-nav"
+          aria-haspopup="true"
+          className="sm:hidden p-2 min-h-[48px] min-w-[48px] flex items-center justify-center text-(--foreground)"
           onClick={() => setOpen((v) => !v)}
         >
           {open ? (
@@ -118,7 +121,11 @@ export default function Navbar() {
 
       {/* Mobile drawer */}
       {open && (
-        <div className="sm:hidden border-t border-(--border) bg-(--background) px-4 pb-4 pt-3 space-y-3">
+        <nav
+          id="mobile-nav"
+          aria-label="Mobile navigation"
+          className="sm:hidden border-t border-(--border) bg-(--background) px-4 pb-4 pt-3 space-y-3"
+        >
           {BRAND_LINKS.map((b) => (
             <Link
               key={b.id}
@@ -145,7 +152,7 @@ export default function Navbar() {
           ))}
           <Link href="/about"   onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-(--muted)">About</Link>
           <Link href="/contact" onClick={() => setOpen(false)} className="block px-3 py-2 text-sm text-(--muted)">Contact</Link>
-        </div>
+        </nav>
       )}
     </header>
   );

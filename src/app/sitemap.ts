@@ -15,6 +15,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/tigernut-mill/order`,    priority: 0.7,  changeFrequency: "monthly" },
     { url: `${BASE}/about`,                  priority: 0.5,  changeFrequency: "monthly" },
     { url: `${BASE}/contact`,                priority: 0.6,  changeFrequency: "monthly" },
+    { url: `${BASE}/services`,               priority: 0.8,  changeFrequency: "weekly"  },
+    { url: `${BASE}/testimonials`,           priority: 0.6,  changeFrequency: "monthly" },
   ];
 
   const categoryRoutes: MetadataRoute.Sitemap = [

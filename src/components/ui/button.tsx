@@ -1,18 +1,26 @@
 import type { Brand } from "@/types/business";
 
 type Variant = "primary" | "secondary" | "ghost";
+type Size    = "sm" | "md" | "lg";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   brand?: Brand;
   variant?: Variant;
+  size?: Size;
   as?: "button" | "a";
   href?: string;
   target?: string;
   rel?: string;
 }
 
+const SIZE_CLASS: Record<Size, string> = {
+  sm: "min-h-[44px] px-3 text-xs",
+  md: "min-h-[44px] px-5 text-sm",
+  lg: "min-h-[52px] px-7 text-base",
+};
+
 const BASE =
-  "inline-flex items-center justify-center gap-2 font-medium text-sm transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50 disabled:pointer-events-none min-h-[48px] px-5";
+  "inline-flex items-center justify-center gap-2 font-medium transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-[0.97]";
 
 const BRAND_PRIMARY: Record<Brand, string> = {
   "city-chops":
@@ -51,17 +59,18 @@ function resolveClass(brand: Brand | undefined, variant: Variant): string {
 export default function Button({
   brand,
   variant = "primary",
+  size = "md",
   as = "button",
   href,
   className = "",
   children,
   ...props
 }: ButtonProps) {
-  const cls = `${BASE} ${resolveClass(brand, variant)} ${className}`;
+  const cls = `${BASE} ${SIZE_CLASS[size]} ${resolveClass(brand, variant)} ${className}`;
 
   if (as === "a" && href) {
     return (
-      <a href={href} className={cls} target={props.target} rel={props.rel}>
+      <a href={href} className={cls} role="button" target={props.target} rel={props.rel}>
         {children}
       </a>
     );

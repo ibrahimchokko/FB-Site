@@ -1,4 +1,4 @@
-import type { BrandConfig, MenuItem } from "@/types/business";
+import type { BrandConfig, BusinessHours, MenuItem, Testimonial } from "@/types/business";
 
 export const BRANDS: BrandConfig[] = [
   {
@@ -140,3 +140,48 @@ export const MENU_ITEMS: MenuItem[] = [
 ];
 
 export const FEATURED_ITEMS = MENU_ITEMS.filter((i) => i.featured);
+
+export const BUSINESS_HOURS: BusinessHours = {
+  openHour: 7,
+  closeHour: 20,
+  operatingDays: [1, 2, 3, 4, 5, 6], // Mon–Sat
+};
+
+export const TESTIMONIALS: Testimonial[] = [
+  {
+    id: "t-001",
+    brand: "city-chops",
+    author: "Fatima A.",
+    location: "Kaduna North",
+    body: "The Waina here is better than anywhere I've tried in Kaduna. Soft, fresh, and that pepper sauce — incredible.",
+    rating: 5,
+    date: "2025-03-12",
+  },
+  {
+    id: "t-002",
+    brand: "city-chops",
+    author: "Emeka O.",
+    location: "Kaduna South",
+    body: "We hired City Chops for our naming ceremony. 60 guests, everything was hot and perfectly seasoned. Highly recommend.",
+    rating: 5,
+    date: "2025-05-04",
+  },
+  {
+    id: "t-003",
+    brand: "fresh-tigernut",
+    author: "Halima M.",
+    location: "Ungwan Romi",
+    body: "Kunun Aya every morning is now my routine. You can taste that it's pressed fresh — no artificial taste at all.",
+    rating: 5,
+    date: "2025-04-18",
+  },
+  {
+    id: "t-004",
+    brand: "fresh-tigernut",
+    author: "Bashir K.",
+    location: "Barnawa",
+    body: "The Tigernut Mix with dates is something else. My whole family switched from fizzy drinks to this.",
+    rating: 5,
+    date: "2025-06-01",
+  },
+];

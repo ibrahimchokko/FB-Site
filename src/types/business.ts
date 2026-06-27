@@ -27,6 +27,25 @@ export interface MenuItem {
   available?: boolean;    // defaults true; set false for seasonal items
 }
 
+export interface BusinessHours {
+  /** 24-h open time, e.g. 7 = 07:00 */
+  openHour: number;
+  /** 24-h close time, e.g. 20 = 20:00 */
+  closeHour: number;
+  /** 0 = Sunday … 6 = Saturday */
+  operatingDays: number[];
+}
+
+export interface Testimonial {
+  id: string;
+  brand: Brand;
+  author: string;
+  location: string;       // e.g. "Kaduna North"
+  body: string;
+  rating: 1 | 2 | 3 | 4 | 5;
+  date: string;           // ISO date string
+}
+
 export interface BrandConfig {
   id: Brand;
   name: string;

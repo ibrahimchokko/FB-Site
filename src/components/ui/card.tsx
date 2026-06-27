@@ -14,10 +14,16 @@ const BRAND_ACCENT: Record<Brand, string> = {
 
 export function Card({ brand, className = "", onClick, children }: CardProps) {
   const accent = brand ? BRAND_ACCENT[brand] : "";
+  const interactive = onClick
+    ? "cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-brand-500)]"
+    : "";
   return (
     <div
       onClick={onClick}
-      className={`bg-(--surface) rounded-[var(--radius-card)] shadow-[var(--shadow-card)] dark:shadow-[var(--shadow-card-dark)] overflow-hidden transition-transform duration-200 hover:-translate-y-0.5 ${accent} ${className}`}
+      onKeyDown={onClick ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onClick(); } } : undefined}
+      role={onClick ? "button" : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      className={`bg-(--surface) rounded-[var(--radius-card)] shadow-[var(--shadow-card)] dark:shadow-[var(--shadow-card-dark)] overflow-hidden transition-transform duration-200 hover:-translate-y-0.5 ${accent} ${interactive} ${className}`}
     >
       {children}
     </div>
@@ -35,6 +41,8 @@ export function CardImage({ src, alt }: CardImageProps) {
     <img
       src={src}
       alt={alt}
+      width={400}
+      height={300}
       className="w-full aspect-[4/3] object-cover"
       loading="lazy"
     />
