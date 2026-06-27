@@ -1,26 +1,96 @@
 @import "tailwindcss";
 
+/* ── Design tokens (Tailwind v4 CSS-first config) ──────────────────── */
+@theme {
+  /* Fonts */
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+
+  /* ── Parent / Umbrella brand ──────────────────────────────────────── */
+  --color-brand-50:  #faf7f2;
+  --color-brand-100: #f0e9dc;
+  --color-brand-500: #c47c2b;
+  --color-brand-900: #1a1209;
+
+  /* ── City Chops ───────────────────────────────────────────────────── */
+  --color-chops-bg:      #1c1410;
+  --color-chops-primary: #c0392b;
+  --color-chops-gold:    #e8a838;
+  --color-chops-muted:   #6b4c3b;
+  --color-chops-surface: #2a1f1a;
+  --color-chops-light:   #fdf3ec;
+
+  /* ── Fresh Tigernut Mill ─────────────────────────────────────────── */
+  --color-ftm-bg:      #f7f3ec;
+  --color-ftm-primary: #4a7c59;
+  --color-ftm-amber:   #b5651d;
+  --color-ftm-milk:    #fdfaf4;
+  --color-ftm-muted:   #7a6652;
+  --color-ftm-dark:    #1e2d23;
+
+  /* Border radii */
+  --radius-card:  1rem;
+  --radius-btn:   0.625rem;
+  --radius-pill:  999px;
+  --radius-image: 0.75rem;
+
+  /* Spacing extras */
+  --spacing-section:    5rem;
+  --spacing-section-sm: 3rem;
+
+  /* Shadows */
+  --shadow-card:     0 2px 12px 0 rgb(0 0 0 / 0.08);
+  --shadow-card-dark: 0 2px 16px 0 rgb(0 0 0 / 0.45);
+  --shadow-cta-chops: 0 4px 20px 0 rgb(192 57 43 / 0.35);
+  --shadow-cta-ftm:   0 4px 20px 0 rgb(74 124 89 / 0.35);
+
+  /* Transitions */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Semantic surface tokens ────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: var(--color-brand-50);
+  --foreground: var(--color-brand-900);
+  --surface:    #ffffff;
+  --border:     #e8ddd0;
+  --muted:      #7a6652;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dark {
+  --background: #0f0d0b;
+  --foreground: var(--color-brand-100);
+  --surface:    var(--color-chops-surface);
+  --border:     #2e2218;
+  --muted:      #a08060;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Base styles ────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  border-color: var(--border);
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Utility: max content width ─────────────────────────────────────── */
+.content-container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+@media (min-width: 640px) {
+  .content-container { padding-inline: 1.5rem; }
+}
+
+@media (min-width: 1024px) {
+  .content-container { padding-inline: 2rem; }
 }
